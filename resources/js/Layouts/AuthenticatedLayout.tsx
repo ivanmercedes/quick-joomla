@@ -1,159 +1,145 @@
-import ApplicationLogo from "@/Components/ApplicationLogo";
-import Dropdown from "@/Components/Dropdown";
-import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
-import { useState } from "react";
+import { Button } from "@/Components/ui/button";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/Components/ui/dropdown-menu";
+import { Sheet, SheetContent, SheetTrigger } from "@/Components/ui/sheet";
+import { Link } from "@inertiajs/react";
+import { Home, PanelLeft } from "lucide-react";
 
 interface AuthenticatedProps {
     user?: any;
-    header?: any;
-    children: any;
+    children: React.ReactNode;
 }
 
-export default function Authenticated({ user, header, children }: AuthenticatedProps) {
-    const [showingNavigationDropdown, setShowingNavigationDropdown] =
-        useState(false);
-
-
+export default function Authenticated({ user, children }: AuthenticatedProps) {
     return (
-        <div className="min-h-screen">
-            <nav className="border-b border-border">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16">
-                        <div className="flex">
-                            <div className="shrink-0 flex items-center">
-                                <ApplicationLogo />
-                            </div>
-                        </div>
-
-                        <div className="hidden sm:flex sm:items-center sm:ms-6">
-                            <div className="ms-3 relative">
-                                <Dropdown>
-                                    <Dropdown.Trigger>
-                                        <span className="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500  focus:outline-none transition ease-in-out duration-150"
-                                            >
-                                                {user.name}
-
-                                                <svg
-                                                    className="ms-2 -me-0.5 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </Dropdown.Trigger>
-
-                                    <Dropdown.Content>
-                                        <Dropdown.Link
-                                            href={route("profile.edit")}
-                                        >
-                                            Profile
-                                        </Dropdown.Link>
-                                        <Dropdown.Link
-                                            href={route("logout")}
-                                            method="post"
-                                            as="button"
-                                        >
-                                            Log Out
-                                        </Dropdown.Link>
-                                    </Dropdown.Content>
-                                </Dropdown>
-                            </div>
-                        </div>
-
-                        <div className="-me-2 flex items-center sm:hidden">
-                            <button
-                                onClick={() =>
-                                    setShowingNavigationDropdown(
-                                        (previousState) => !previousState
-                                    )
-                                }
-                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out"
+        <div className="flex min-h-screen w-full flex-col bg-muted/40">
+            <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
+                <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
+                    <Link
+                        href={route("dashboard")}
+                        className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
+                    >
+                        <svg
+                            className="h-6 w-6 transition-all  group-hover:scale-110"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            id="joomla"
+                        >
+                            <g
+                                fill="none"
+                                stroke="#fff"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
                             >
-                                <svg
-                                    className="h-6 w-6"
-                                    stroke="currentColor"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
+                                <path d="M20.42 16.66a4.44 4.44 0 0 0-1.27-4L18.5 12l.65-.65a4.44 4.44 0 0 0 1.27-4 3 3 0 1 0-3.76-3.76 4.44 4.44 0 0 0-4 1.27L12 5.5l-.65-.65a4.44 4.44 0 0 0-4-1.27 3 3 0 1 0-3.77 3.76 4.44 4.44 0 0 0 1.27 4l.65.66-.65.65a4.44 4.44 0 0 0-1.27 4 3 3 0 1 0 3.76 3.76 4.44 4.44 0 0 0 4-1.27l.66-.64.65.65a4.44 4.44 0 0 0 4 1.27 3 3 0 1 0 3.76-3.76Zm-6.54-9.54a2.12 2.12 0 1 1 3 3l-.13.13-3-3ZM15 12l-3 3-3-3 3-3Zm-7.88-1.88a2.12 2.12 0 0 1 3-3l.13.13-3 3Zm3 6.76a2.12 2.12 0 1 1-3-3l.13-.13 3 3Zm5.26.62a2.12 2.12 0 0 1-1.5-.62l-.13-.13 3-3 .13.13a2.12 2.12 0 0 1-1.5 3.62Z"></path>
+                                <path d="m12 5.5-1.75 1.75M5.5 12l1.75 1.75M12 18.5l1.75-1.75M18.5 12l-1.75-1.75M7.25 10.25 9 12M10.25 16.75 12 15M16.75 13.75 15 12M12 9l1.75-1.75"></path>
+                            </g>
+                        </svg>
+                        <span className="sr-only">Quick Joomla</span>
+                    </Link>
+                    {/* <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Link
+                                href="#"
+                                className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                            >
+                                <Home className="h-5 w-5" />
+                                <span className="sr-only">Dashboard</span>
+                            </Link>
+                        </TooltipTrigger>
+                        <TooltipContent side="right">Dashboard</TooltipContent>
+                    </Tooltip> */}
+                </nav>
+            </aside>
+            <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+                <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+                    <Sheet>
+                        <SheetTrigger asChild>
+                            <Button
+                                size="icon"
+                                variant="outline"
+                                className="sm:hidden"
+                            >
+                                <PanelLeft className="h-5 w-5" />
+                                <span className="sr-only">Toggle Menu</span>
+                            </Button>
+                        </SheetTrigger>
+                        <SheetContent side="left" className="sm:max-w-xs">
+                            <nav className="grid gap-6 text-lg font-medium">
+                                <Link
+                                    href={route("dashboard")}
+                                    className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
                                 >
-                                    <path
-                                        className={
-                                            !showingNavigationDropdown
-                                                ? "inline-flex"
-                                                : "hidden"
-                                        }
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        className={
-                                            showingNavigationDropdown
-                                                ? "inline-flex"
-                                                : "hidden"
-                                        }
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div
-                    className={
-                        (showingNavigationDropdown ? "block" : "hidden") +
-                        " sm:hidden"
-                    }
-                >
-                    <div className="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800 dark:text-gray-200">
-                                {user.name}
-                            </div>
-                            <div className="font-medium text-sm text-gray-500">
-                                {user.email}
-                            </div>
-                        </div>
-
-                        <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route("profile.edit")}>
-                                Profile
-                            </ResponsiveNavLink>
-                            <ResponsiveNavLink
-                                method="post"
-                                href={route("logout")}
-                                as="button"
+                                    <svg
+                                        className="h-6 w-6 transition-all  group-hover:scale-110"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        id="joomla"
+                                    >
+                                        <g
+                                            fill="none"
+                                            stroke="#fff"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <path d="M20.42 16.66a4.44 4.44 0 0 0-1.27-4L18.5 12l.65-.65a4.44 4.44 0 0 0 1.27-4 3 3 0 1 0-3.76-3.76 4.44 4.44 0 0 0-4 1.27L12 5.5l-.65-.65a4.44 4.44 0 0 0-4-1.27 3 3 0 1 0-3.77 3.76 4.44 4.44 0 0 0 1.27 4l.65.66-.65.65a4.44 4.44 0 0 0-1.27 4 3 3 0 1 0 3.76 3.76 4.44 4.44 0 0 0 4-1.27l.66-.64.65.65a4.44 4.44 0 0 0 4 1.27 3 3 0 1 0 3.76-3.76Zm-6.54-9.54a2.12 2.12 0 1 1 3 3l-.13.13-3-3ZM15 12l-3 3-3-3 3-3Zm-7.88-1.88a2.12 2.12 0 0 1 3-3l.13.13-3 3Zm3 6.76a2.12 2.12 0 1 1-3-3l.13-.13 3 3Zm5.26.62a2.12 2.12 0 0 1-1.5-.62l-.13-.13 3-3 .13.13a2.12 2.12 0 0 1-1.5 3.62Z"></path>
+                                            <path d="m12 5.5-1.75 1.75M5.5 12l1.75 1.75M12 18.5l1.75-1.75M18.5 12l-1.75-1.75M7.25 10.25 9 12M10.25 16.75 12 15M16.75 13.75 15 12M12 9l1.75-1.75"></path>
+                                        </g>
+                                    </svg>
+                                    <span className="sr-only">
+                                        Quick Joomla
+                                    </span>
+                                </Link>
+                                <Link
+                                    href="#"
+                                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                                >
+                                    <Home className="h-5 w-5" />
+                                    Dashboard
+                                </Link>
+                            </nav>
+                        </SheetContent>
+                    </Sheet>
+                    <div className="relative ml-auto flex-1 md:grow-0"></div>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                className="overflow-hidden rounded-full"
                             >
-                                Log Out
-                            </ResponsiveNavLink>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-
-            {header && (
-                <header className="bg-white dark:bg-gray-800 shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {header}
-                    </div>
+                                {user.name[0]}
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Mi cuenta</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>
+                                <Link href={route("profile.edit")}>Perfil</Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>
+                                <Link
+                                    method="post"
+                                    href={route("logout")}
+                                    as="button"
+                                >
+                                    Salir
+                                </Link>
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </header>
-            )}
-
-            <main className="px-4">{children}</main>
+                <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+                    {children}
+                </main>
+            </div>
         </div>
     );
 }
