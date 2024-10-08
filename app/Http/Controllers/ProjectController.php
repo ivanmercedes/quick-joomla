@@ -75,7 +75,7 @@ class ProjectController extends Controller
                 throw new \Exception("No se pudo escribir el archivo configuration.php.");
             }
 
-            return redirect(route('dashboard'))->with('success', 'Proyecto creado exitosamente.');
+            return redirect(route('dashboard'));
         } catch (\Exception $e) {
             // Manejo de errores
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
